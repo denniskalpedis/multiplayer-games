@@ -1,0 +1,14 @@
+<h1 *ngIf="turn == 1">Player 1's Turn</h1>
+<h1 *ngIf="turn == 2">Player 2's Turn</h1>
+
+Player 1 Score: {{p1Score}}&emsp;Player 2 Score: {{p2Score}}<br>
+
+<div class="col-2 d-inline-block" *ngFor="let card of testing; let i = index">
+  <label>
+    <input type="checkbox"  [checked]="testing[i].active != 'none'" [disabled]="testing[i].active != 'none' || waiting"/>
+    <div class="d-inline-block outer">
+      <div class="bg-secondary d-inline-block card front" (click)="onClick($event)" id={{i}}></div>
+      <div class="d-inline-block card back" [ngStyle]="{'background-image':'url('+testing[i].active+')','background-size':'100px 100px','outline':currentPlayer}" [ngClass]="{'p1' : testing[i].player == 1, 'p2' : testing[i].player == 2}"></div>
+    </div>
+  </label>
+</div>
