@@ -2,24 +2,25 @@ const Game = require('../controllers/games.js');
 const path = require("path");
 
 module.exports = function(app){
-    // app.get('/api/pets', function(req, res) {
-    //     pets.pets(req,res);
-    // })
-    // app.get('/api/pets/:id', function(req,res){
-    //     pets.pet(req,res);
-    // })
-    // app.post('/api/pets', function(req, res) {
-    //     pets.new(req,res);
-    // })
-    // app.put('/api/pets/update/:id', function(req,res){
-    //     pets.update(req,res);
-    // })
-    // app.get('/api/pets/like/:id', function(req,res){
-    //     pets.like(req,res);
-    // })
-    // app.delete('/api/pets/delete/:id', function(req,res){
-    //     pets.remove(req,res);
-    // })
+    app.post('/api/user/create', function(req, res) {
+        Game.newUser(req,res);
+    })
+    app.post('/api/user/login', function(req, res) {
+        console.log('in route')
+        Game.logIn(req,res);
+    })
+    app.get('/api/user/session', function(req,res){
+        Game.checkSession(req,res);
+    })
+    app.get('/api/user/logout', function(req,res){
+        Game.logOut(req,res);
+    })
+    app.get('/api/user/delete', function(req,res){
+        Game.deleteUser(req,res);
+    })
+    app.get('/api/user/all', function(req,res){
+        Game.allUsers(req,res);
+    })
     app.all("*", (req,res,next) => {
         res.sendFile(path.resolve("./public/dist/public/index.html"))
     });

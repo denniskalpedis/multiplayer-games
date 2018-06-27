@@ -1,3 +1,73 @@
-<p>
-  login works!
-</p>
+<form (submit)="onRegistration()" name="myForm" #myForm='ngForm'>
+  <p *ngIf="registrationError">{{registrationError}}</p>
+  <div *ngIf="!email.valid && (email.dirty || email.touched)">
+    <p class="error" *ngIf="email.errors?.required">Email feild is required.</p>
+    <p class="error" *ngIf="email.errors?.pattern">Must be a valid email.</p>
+  </div>
+  Email:<br>
+  <input type="email" name="email"
+    [(ngModel)]="user.email"
+    required
+    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+    #email="ngModel"><br>
+  <div *ngIf="!username.valid && (username.dirty || username.touched)">
+    <p class="error" *ngIf="username.errors?.required">Username feild is required.</p>
+    <p class="error" *ngIf="username.errors?.minlength">Username feild must be at least 3 characters long.</p>
+  </div>
+  Username:<br>
+  <input type="text" name="username"
+   [(ngModel)]="user.username"
+    required
+    minlength="3"
+    #username="ngModel"><br>
+  <div *ngIf="!password.valid && (password.dirty || password.touched)">
+    <p class="error" *ngIf="password.errors?.required">Password feild is required.</p>
+    <p class="error" *ngIf="password.errors?.minlength">Password feild must be at least 8 characters long.</p>
+  </div>
+  Password:<br>
+  <input type="password" name="password"
+    [(ngModel)]="user.password"
+    required
+    minlength="8"
+    #password="ngModel"><br>
+  <div *ngIf="!passwordC.valid && (passwordC.dirty || passwordC.touched)">
+    <p class="error" *ngIf="passwordC.errors?.required">Password feild is required.</p>
+    <p class="error" *ngIf="passwordC.errors?.minlength">Password feild must be at least 8 characters long.</p>
+    <p class="error" *ngIf="passwordC.errors?.match">long.</p>
+    <!-- <p class="error" *ngIf="user.passwordC !== user.password">Password feilds do not match.</p> -->
+  </div>
+  <p class="error" *ngIf="user.passwordC !== user.password && (passwordC.dirty || passwordC.touched)">Password feilds do not match.</p>
+  ConfirmPassword:<br>
+  <input type="password" name="passwordC"
+    [(ngModel)]="user.passwordC"
+    required
+    minlength="8"
+    match="user.password"
+    #passwordC="ngModel"><br>
+    <input type="submit" [disabled]="!myForm.valid || user.passwordC !== user.password">
+</form>
+
+<form (submit)="onLogin()" name="loginForm" #loginForm='ngForm'>
+  <p *ngIf="loginError">{{loginError}}</p>
+  <div *ngIf="!lEmail.valid && (lEmail.dirty || lEmail.touched)">
+    <p class="error" *ngIf="lEmail.errors?.required">Email feild is required.</p>
+    <p class="error" *ngIf="lEmail.errors?.pattern">Must be a valid email.</p>
+  </div>
+  Email:<br>
+  <input type="email" name="lEmail"
+    [(ngModel)]="login.email"
+    required
+    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+    #lEmail="ngModel"><br>
+  <div *ngIf="!lPassword.valid && (lPassword.dirty || lPassword.touched)">
+    <p class="error" *ngIf="lPassword.errors?.required">Password feild is required.</p>
+    <p class="error" *ngIf="lPassword.errors?.minlength">Password feild must be at least 8 characters long.</p>
+  </div>
+  Password:<br>
+  <input type="password" name="lPassword"
+    [(ngModel)]="login.password"
+    required
+    minlength="8"
+    #lPassword="ngModel"><br>
+  <input type="submit" [disabled]="!loginForm.valid">
+</form>
