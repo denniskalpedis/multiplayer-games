@@ -5,6 +5,13 @@ var UserSchema = new mongoose.Schema({
     username: {type: String, required: [true, "Username is required"], minlength: [3, "Username must have at least 3 characters"]},
     password: {type: String,  required: [true, "Password is required."], minlength: [8, "Passwords must have at least 3 characters"]},
     wins: {}
-   },{timestamp: true})
+   },{timestamp: true});
+var ChatSchema = new mongoose.Schema({
+    room: String,
+    nickname: String,
+    message: String
+  },{timestamp: true});
+  
    
 mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Chat', ChatSchema);

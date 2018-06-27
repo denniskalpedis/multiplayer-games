@@ -1,5 +1,6 @@
 const Game = require('../controllers/games.js');
 const path = require("path");
+var Chat = require('../models/user.js');
 
 module.exports = function(app){
     // app.get('/api/pets', function(req, res) {
@@ -20,6 +21,26 @@ module.exports = function(app){
     // app.delete('/api/pets/delete/:id', function(req,res){
     //     pets.remove(req,res);
     // })
+    // app.get('/chat', function(req, res, next){
+    //     console.log(Date.now());
+    //     res.send('REST API!');
+    // });
+    app.get('/chat/:room', function(req, res, next) {
+        Chat.find({ room: req.params.room }, function (err, chats) {
+        if (err){ 
+            return next(err);
+        }
+        res.json(chats);
+        });
+    });
+    app.post('/chat', function(req, res, next) {
+        Chat.create(req.body, function (err, post) {
+        if (err) {
+            return next(err);
+        }
+        res.json(post);
+        });
+    });
     app.all("*", (req,res,next) => {
         res.sendFile(path.resolve("./public/dist/public/index.html"))
     });
