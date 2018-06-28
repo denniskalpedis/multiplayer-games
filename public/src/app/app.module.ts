@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HttpService } from './http.service';
+import { UserComponent } from './user/user.component';
 import { MemoryComponent } from './memory/memory.component';
 import { ChatComponent } from './chat/chat.component';
 import { ChatService } from './chat.service';
@@ -16,7 +17,8 @@ import { ChatService } from './chat.service';
     AppComponent,
     LoginComponent,
     MemoryComponent,
-    ChatComponent
+    ChatComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
