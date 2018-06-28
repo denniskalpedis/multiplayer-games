@@ -19,6 +19,12 @@ export class HttpService {
     return this._http.post('/api/user/login',user);
   }
   logout(){
-    return this._http.get('api/user/logout');
+    return this._http.get('/api/user/logout');
+  }
+  newTTT(){
+    return this._http.get('/api/TTT/new');
+  }
+  openTTT(){
+    return this._http.get('/api/TTT/open');
   }
 }

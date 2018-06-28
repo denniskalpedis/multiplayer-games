@@ -9,13 +9,15 @@ import { LoginComponent } from './login/login.component';
 import { HttpService } from './http.service';
 import { UserComponent } from './user/user.component';
 import { MemoryComponent } from './memory/memory.component';
+import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     UserComponent,
-    MemoryComponent
+    MemoryComponent,
+    TicTacToeComponent
   ],
   imports: [
     BrowserModule,
