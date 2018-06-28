@@ -10,4 +10,4 @@ fs.readdirSync(models_path).forEach(function(file) {
     // require the file (this runs the model file which registers the schema)
     require(models_path + '/' + file);
    }
-})
+});

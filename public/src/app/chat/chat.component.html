@@ -9,7 +9,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5">
-            <div class="panel panel-primary" *ngIf="joinned; else joinroom">
+            <div class="panel panel-primary" *ngIf="joined; else joinroom">
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon-comment"></span> {{ msgData.room }}
                     <div class="btn-group pull-right">
@@ -53,8 +53,8 @@
                 <div class="panel-footer">
                   <form (ngSubmit)="sendMessage()" #msgForm="ngForm">
                     <div class="input-group">
-                        <input type="hidden" [(ngModel)]="msgData.room" name="room" />
-                        <input type="hidden" [(ngModel)]="msgData.nickname" name="nickname" />
+                        <input type="hidden" [ngModel]="msgData.room" name="room" />
+                        <input type="hidden" [ngModel]="msgData.nickname" name="nickname" />
                         <input id="btn-input" type="text" [(ngModel)]="msgData.message" name="message" class="form-control input-sm" placeholder="Type your message here..." required="" />
                         <span class="input-group-btn">
                             <button class="btn btn-warning btn-sm" id="btn-chat" [disabled]="!msgForm.form.valid">

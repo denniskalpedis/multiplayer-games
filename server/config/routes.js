@@ -1,6 +1,6 @@
 const Game = require('../controllers/games.js');
 const path = require("path");
-var Chat = require('../models/user.js');
+// var Chat = require('../models/user.js');
 
 module.exports = function(app){
     // app.get('/api/pets', function(req, res) {
@@ -25,21 +25,26 @@ module.exports = function(app){
     //     console.log(Date.now());
     //     res.send('REST API!');
     // });
-    app.get('/chat/:room', function(req, res, next) {
-        Chat.find({ room: req.params.room }, function (err, chats) {
-        if (err){ 
-            return next(err);
-        }
-        res.json(chats);
+    app.get('/api/chat', function(req, res, next){
+            Game.getAllChats(req, res);
         });
+    app.get('/chat/:room', function(req, res, next) {
+        Game.getChat(req, res);
+        // Chat.find({ room: req.params.room }, function (err, chats) {
+        // if (err){ 
+        //     return next(err);
+        // }
+        // res.json(chats);
+        // });
     });
     app.post('/chat', function(req, res, next) {
-        Chat.create(req.body, function (err, post) {
-        if (err) {
-            return next(err);
-        }
-        res.json(post);
-        });
+        Game.postChat(req, res);
+        // Chat.create(req.body, function (err, post) {
+        // if (err) {
+        //     return next(err);
+        // }
+        // res.json(post);
+        // });
     });
     app.all("*", (req,res,next) => {
         res.sendFile(path.resolve("./public/dist/public/index.html"))
