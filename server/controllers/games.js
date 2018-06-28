@@ -1,8 +1,34 @@
-const mongoose = require('mongoose'),
-      User = mongoose.model('User'),
-      bcrypt = require('bcrypt-as-promised');
-
+const mongoose = require('mongoose');
+var Chat = mongoose.model('Chat');
+var Memory = mongoose.model('Memory');
+User = mongoose.model('User'),
+bcrypt = require('bcrypt-as-promised');
 module.exports = {
+    getAllChats: function(request, response){
+        Chat.find({}, function(err, chat){
+            if(err){
+                response.json({message: "error", error: "DANGER WILL ROBINSON!"});
+            } else {
+                response.json({message: "GREAT SUCCESS", Chat: chat});
+            }
+        });
+    },
+    getChat: function(req, res){
+        Chat.find({ room: req.params.room }, function (err, chats) {
+            if (err){ 
+                return next(err);
+            }
+            res.json(chats);
+            });
+    },
+    postChat: function(req, res){
+        Chat.create(req.body, function (err, post) {
+            if (err) {
+                return next(err);
+            }
+            res.json(post);
+            });
+    },
     newUser: function(req,res){
         User.findOne({email: req.body.email},function(err,user){
             if(err){
@@ -74,18 +100,28 @@ module.exports = {
         })
     },
     checkSession: function(req,res){
+        console.log(req.session.userId);
         if(!req.session.userId){
-            res.json({loggedIn: false})
-            return
+            res.json({loggedIn: false});
+            return;
         }
         User.findOne({_id: req.session.userId},function(err,user){
             res.json({loggedIn: true, user: user});
-        })
+        });
     },
     logOut: function(req,res){
         req.session.userId = false;
         console.log(req.session.userId);
         res.json({loggedIn: false});
+    },
+    getUser: function(req,res){
+        User.findOne({_id: req.session.userId}, function(err, user){
+            if(err){
+
+            }else{
+                res.json({user:user});
+            }
+        });
     },
     deleteUser: function(req,res){
         User.remove({},function(err){

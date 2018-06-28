@@ -1,0 +1,125 @@
+/* #chat_bubble{
+    position: absolute;
+    left:5px;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    z-index: -1;
+    transform: translateY(20px)
+}
+#chat_box {
+    background: white;
+    color: black;
+    position: fixed;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 20%;
+    min-height: 250px;
+    z-index: 9999;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  }
+#chat {
+    height: 65%;
+    width: 93%;
+    margin-left: 3.4%;
+    margin-right: 3.4%;
+    background-color: white;
+}
+input {
+    display: none;
+}
+div#chat_box {
+    height:200px;
+    overflow:hidden;
+  }
+  div#chat_box {
+    animation: 3s slide-up;
+    margin-top:0%;
+  }
+  
+  @keyframes slide-up {
+    from {
+        bottom: -20%;
+        height: 20%;
+    }
+  
+    to {
+      bottom: 0;
+      height: 20%;
+    }
+  } */
+  #chat_box {
+    background: white;
+    color: black;
+    position: fixed;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 20%;
+    min-height: 250px;
+    z-index: 9999;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  }
+
+  .chat
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.chat li
+{
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+.chat li.left .chat-body
+{
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body
+{
+    margin-right: 60px;
+}
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+    color: #777777;
+}
+
+.card .slidedown .glyphicon, .chat .glyphicon
+{
+    margin-right: 5px;
+}
+
+.card-body
+{
+    overflow-y: scroll;
+    height: 250px;
+}
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
