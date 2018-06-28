@@ -6,8 +6,9 @@
   <div id="chat" class="border border-dark"></div>
   <label for="">Say:</label> <input type="text">
 </div> -->
-
+<!-- <img src="/assets/images/chat.png" id="chat_bubble"> -->
 <div class="card card-primary" id="chat_box" *ngIf="joined">
+    <img src="/assets/images/chat.png" id="chat_bubble">
   <div class="card-heading">
     <span class="glyphicon glyphicon-comment"></span> {{ msgData.room }}
     <!-- <div class="btn-group float-right">
