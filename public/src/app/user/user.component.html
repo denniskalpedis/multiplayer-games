@@ -1,2 +1,16 @@
-<h3>In User</h3>
-<button (click)="logout()">Log Out</button>
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" [routerLink]="['/user']">
+        <img src="./assets/images/home.png" width="60" height="60" class="d-inline-block align-top" alt="">
+    </a>
+    <a (click)="logout()">Log Out</a>
+</nav>
+<h4>Open a new game!</h4>
+<p>Open a new Tic Tac Toe Game <button (click)="openTTT()">Go</button></p>
+
+<h3>Join an existing Game!</h3>
+<div *ngFor="let game of TTTGames">
+    <div *ngIf="user._id != game.players[0]._id">
+        <p>{{game.players[0].username}} is awaiting a challenger!</p>
+        <button (click)="joinTTT(game._id)">Battle!</button>
+    </div>
+</div>

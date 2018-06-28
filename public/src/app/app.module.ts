@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { HttpService } from './http.service';
 import { UserComponent } from './user/user.component';
 import { MemoryComponent } from './memory/memory.component';
+import { TicTacToeComponent } from './tic-tac-toe/tic-tac-toe.component';
 import { ChatComponent } from './chat/chat.component';
 import { ChatService } from './chat.service';
 
@@ -16,9 +17,10 @@ import { ChatService } from './chat.service';
   declarations: [
     AppComponent,
     LoginComponent,
+    UserComponent,
     MemoryComponent,
+    TicTacToeComponent,
     ChatComponent,
-    UserComponent
   ],
   imports: [
     BrowserModule,

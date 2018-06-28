@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from './../http.service';
+import * as io from "socket.io-client";
 import { ActivatedRoute, Params, Router } from '@angular/router';
+
+
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  selector: 'app-tic-tac-toe',
+  templateUrl: './tic-tac-toe.component.html',
+  styleUrls: ['./tic-tac-toe.component.css']
 })
-export class UserComponent implements OnInit {
+export class TicTacToeComponent implements OnInit {
   user;
-  TTTGames;
-  Mgames;
   constructor(
     private _httpService: HttpService,
     private _route: ActivatedRoute,
@@ -18,8 +19,6 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
     this.checkSession();
-    this.getOpenTTT();
-    // this.getOpenMemory();
   }
   checkSession(){
     let loggedIn = this._httpService.checkSession();
@@ -39,24 +38,8 @@ export class UserComponent implements OnInit {
       }
     })
   }
-  getOpenTTT(){
-    let openTTT = this._httpService.openTTT();
-    openTTT.subscribe(data =>{
-      this.TTTGames = data['games']
-      console.log(this.TTTGames);
-    })
-  }
-  getOpenMemory(){
+  updateBoard(arr, index){
 
-  }
-  openTTT(){
-    let newTTT = this._httpService.newTTT();
-    newTTT.subscribe(data =>{
-      console.log(data);
-      if(data['game']){
-        this._router.navigate(['/ttt/'+ data['game']['_id']]);
-      }
-    })
   }
 
 }
