@@ -5,10 +5,8 @@ require('./server/config/mongoose.js');
 var app = express();
 app.use(bodyParser.json());
 const server = app.listen(8000);
-// var server = require('http').createServer(app);
-// server.listen(8000);
 app.use(express.static( __dirname + '/public/dist/public' ));
-require('./server/config/routes.js')(app);
+
 var io = require('socket.io')(server);
 io.on('connection', function (socket) {
     console.log('User connected');
@@ -25,5 +23,5 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 60000000 }
-  }))
+  }));
 require('./server/config/routes.js')(app);

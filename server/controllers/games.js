@@ -100,18 +100,28 @@ module.exports = {
         })
     },
     checkSession: function(req,res){
+        console.log(req.session.userId);
         if(!req.session.userId){
-            res.json({loggedIn: false})
-            return
+            res.json({loggedIn: false});
+            return;
         }
         User.findOne({_id: req.session.userId},function(err,user){
             res.json({loggedIn: true, user: user});
-        })
+        });
     },
     logOut: function(req,res){
         req.session.userId = false;
         console.log(req.session.userId);
         res.json({loggedIn: false});
+    },
+    getUser: function(req,res){
+        User.findOne({_id: req.session.userId}, function(err, user){
+            if(err){
+
+            }else{
+                res.json({user:user});
+            }
+        });
     },
     deleteUser: function(req,res){
         User.remove({},function(err){

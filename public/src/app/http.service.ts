@@ -12,6 +12,9 @@ export class HttpService {
     console.log('in service')
     return this._http.post('/api/user/create',user);
   }
+  getUser(){
+    return this._http.get('/api/user/loggedIn');
+  }
   checkSession(){
     return this._http.get('/api/user/session');
   }

@@ -1,6 +1,8 @@
 import { Component, OnInit, AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 import { ChatService } from '../chat.service';
+import { HttpService } from './../http.service';
 import * as io from "socket.io-client";
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -15,13 +17,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   msgData = { room: '', nickname: '', message: '' };
   socket = io.connect();
 
-  constructor(private chatService: ChatService) { }
+  constructor(private chatService: ChatService,
+    private _httpService: HttpService,
+    private _router: Router) { }
 
   ngOnInit() {
+    this.getUser();
     var user = JSON.parse(localStorage.getItem("user"));
     if(user!=null) {
-      console.log("user not null!");
-      console.log(user);
       this.getChatByRoom(user.room);
       this.msgData = { room: user.room, nickname: user.nickname, message: '' }
       this.joined = true;
@@ -62,11 +65,18 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   joinRoom() {
     localStorage.setItem("user", JSON.stringify(this.newUser));
     this.getChatByRoom(this.newUser.room);
-    console.log(this.newUser);
     this.msgData = { room: this.newUser.room, nickname: this.newUser.nickname, message: '' };
     this.joined = true;
     this.socket.emit('save-message', { room: this.newUser.room, nickname: this.newUser.nickname, message: 'Join this room'});
-    console.log(this.msgData);
+  }
+  getUser(){
+    let loggedIn = this._httpService.getUser();
+    loggedIn.subscribe(data =>{
+      this.msgData = { room: "general", nickname: data['user'].username, message: '' };
+      this.joined = true;
+      localStorage.setItem("user", JSON.stringify({ nickname: this.msgData.nickname, room: this.msgData.room }));
+      this.socket.emit('save-message', { room: this.msgData.room, nickname: this.msgData.nickname, message: 'Join this room'});
+    });
   }
 
   sendMessage() {
@@ -77,14 +87,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  logout() {
-    var user = JSON.parse(localStorage.getItem("user"));
-    this.socket.emit('save-message', { room: user.room, nickname: user.nickname, message: 'Left this room'});
+  // logout() {
+  //   var user = JSON.parse(localStorage.getItem("user"));
+  //   this.socket.emit('save-message', { room: user.room, nickname: user.nickname, message: 'Left this room'});
     
-    this.newUser = { nickname: '', room: '' };
-    this.msgData = { room: '', nickname: '', message: '' };
-    this.joined = false;
-    localStorage.removeItem("user");
-  }
+  //   this.newUser = { nickname: '', room: '' };
+  //   this.msgData = { room: '', nickname: '', message: '' };
+  //   this.joined = false;
+  //   localStorage.removeItem("user");
+  // }
 
 }
