@@ -13,7 +13,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   joinned: boolean = false;
   newUser = { nickname: '', room: '' };
   msgData = { room: '', nickname: '', message: '' };
-  socket = io('http://localhost:8000');
+  socket = io.connect();
 
   constructor(private chatService: ChatService) { }
 
@@ -26,12 +26,19 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.scrollToBottom();
     }
     this.socket.on('new-message', function (data) {
-      var temp = JSON.parse(data.message["_body"]);
-      if(temp.room === JSON.parse(localStorage.getItem("user")).room) {
-        this.chats.push(temp);
-        this.msgData = { room: user.room, nickname: user.nickname, message: '' }
-        this.scrollToBottom();
-      }
+      // if(this.joined){
+        if(data.message["_body"]){
+          var temp = JSON.parse(data.message["_body"]);
+        } else {
+          var temp = data["message"];
+        }
+        console.log(temp);
+        if(temp.room === JSON.parse(localStorage.getItem("user")).room && this.chats) {
+          this.chats.push(temp);
+          this.msgData = { room: user.room, nickname: user.nickname, message: '' }
+          this.scrollToBottom();
+        }
+      // }
     }.bind(this));
   }
   ngAfterViewChecked() {
@@ -71,6 +78,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.socket.emit('save-message', { room: user.room, nickname: user.nickname, message: 'Left this room'});
     localStorage.removeItem("user");
     this.joinned = false;
+    console.log(localStorage.getItem("user"));
   }
 
 }

@@ -11,7 +11,13 @@ var ChatSchema = new mongoose.Schema({
     nickname: String,
     message: String
   },{timestamp: true});
+var MemorySchema = new mongoose.Schema({
+  room: String,
+  board: any,
+  moves:[],
+},{timestamp: true });
   
    
 mongoose.model('User', UserSchema);
+mongoose.model('Memory', MemorySchema);
 module.exports = mongoose.model('Chat', ChatSchema);
