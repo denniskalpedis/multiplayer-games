@@ -1,0 +1,59 @@
+<!-- 
+<div id="chat_box">
+  <input type="checkbox"/>
+  <img src="/assets/images/chat.png" alt="chat bubble" id="chat_bubble">
+  <p>chat stuff</p>
+  <div id="chat" class="border border-dark"></div>
+  <label for="">Say:</label> <input type="text">
+</div> -->
+
+<div class="card card-primary" id="chat_box" *ngIf="joined">
+  <div class="card-heading">
+    <span class="glyphicon glyphicon-comment"></span> {{ msgData.room }}
+    <!-- <div class="btn-group float-right">
+            <button type="button" class="btn btn-default btn-xs" (click)="logout()">
+                Logout
+            </button>
+        </div> -->
+  </div>
+  <div #scrollMe class="card-body">
+    <ul class="chat">
+      <li *ngFor="let c of chats">
+        <div class="left clearfix" *ngIf="c.nickname===msgData.nickname; else rightchat">
+          <div class="chat-body clearfix">
+            <div class="header">
+              <strong class="primary-font">{{ c.nickname }}</strong>
+              <small class="float-right text-muted">{{ c.updated_at | date: 'medium' }}</small>
+            </div>
+            <p>{{ c.message }}</p>
+          </div>
+        </div>
+        <ng-template #rightchat>
+          <div class="carousel-item-right clearfix">
+            <div class="chat-body clearfix">
+              <div class="header">
+                <small class=" text-muted">{{ c.updated_at | date: 'medium' }}</small>
+                <strong class="float-right primary-font">{{ c.nickname }}</strong>
+              </div>
+              <p>{{ c.message }}</p>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+    </ul>
+  </div>
+  <div class="card-footer">
+    <form (ngSubmit)="sendMessage()" #msgForm="ngForm">
+      <div class="input-group">
+        <input type="hidden" [ngModel]="msgData.room" name="room" />
+        <input type="hidden" [ngModel]="msgData.nickname" name="nickname" />
+        <input id="btn-input" type="text" [(ngModel)]="msgData.message" name="message" class="form-control input-sm" placeholder="Type your message here..."
+          required="" />
+        <span class="input-group-btn">
+          <button class="btn btn-warning btn-sm" id="btn-chat" [disabled]="!msgForm.form.valid">
+            Send</button>
+        </span>
+      </div>
+    </form>
+  </div>
+</div>

@@ -3,6 +3,15 @@ const Game = require('../controllers/games.js');
 const path = require("path");
 
 module.exports = function(app){
+    app.get('/api/chat', function(req, res, next){
+            Game.getAllChats(req, res);
+        });
+    app.get('/chat/:room', function(req, res, next) {
+        Game.getChat(req, res);
+    });
+    app.post('/chat', function(req, res, next) {
+        Game.postChat(req, res);
+    });
     app.post('/api/user/create', function(req, res) {
         User.newUser(req,res);
     })
