@@ -1,0 +1,89 @@
+/* .ttt{
+    height: 100px;
+    width: 100px;
+    background-color: beige;
+    display: inline-block;
+    font-size: 50px;
+}
+.border-right{
+    margin-right: 4px;
+}
+.border-left{
+    margin-left: 4px;
+}
+.border-top{
+    margin-top: 1px;
+}
+.border-bottom{
+    margin-bottom: 1px;
+}
+.tttGameBoard{
+    width: 308px;
+    height: 313px;
+    background-color: black;
+}
+.tttContainer{
+    display: flex;
+    align-content: center;
+    padding: 40px;
+    justify-content: center;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+td {
+  width: 33.333%;
+  border: 6px solid #222;
+}
+td::after {
+  content: '';
+  display: block;
+  margin-top: 100%;
+}
+td {
+  border: 6px solid #222;
+}
+td:first-of-type {
+  border-left-color: transparent;
+  border-top-color: transparent;
+}
+td:nth-of-type(2) {
+  border-top-color: transparent;
+}
+td:nth-of-type(3) {
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+tr:nth-of-type(3) td {
+  border-bottom-color: transparent;
+} */
+
+.tttGameBoard
+{
+
+    display: flex;
+    flex-direction: column;
+
+    
+}
+.ttt-row
+{
+
+    width: 100%;
+    display: flex;
+    align-content: stretch;
+    justify-content: center;
+}
+.ttt 
+{
+    background: grey;
+    height: 100px;
+    width: 100px;
+    box-sizing: border-box;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    font-size: 70px;
+    margin: 3px 3px 0 0;
+}

@@ -59,4 +59,25 @@ module.exports = {
             }
         })
     },
+    joinTTT: function(req,res){
+        User.findOne({_id: req.session.userId},function(err,user){
+            if(err){
+                console.log(err);
+            }
+            if(user){
+                ticTacToe.findOne({_id: req.params.id},function(err,game){
+                    game.players.push(user);
+                    game.turn = user.username;
+                    game.save(function(err,ttt){
+                        if(err){
+                            console.log(err)
+                        }else{
+                            res.json({game: ttt})
+                        } 
+                    })
+                })
+            }
+        })
+    },
+    
 }

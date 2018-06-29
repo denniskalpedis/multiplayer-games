@@ -70,7 +70,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.socket.emit('save-message', { room: this.newUser.room, nickname: this.newUser.nickname, message: 'Join this room'});
   }
   getUser(){
-    let loggedIn = this._httpService.getUser();
+    let loggedIn = this._httpService.checkSession();
     loggedIn.subscribe(data =>{
       this.msgData = { room: "general", nickname: data['user'].username, message: '' };
       this.joined = true;

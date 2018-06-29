@@ -10,7 +10,14 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
   styleUrls: ['./tic-tac-toe.component.css']
 })
 export class TicTacToeComponent implements OnInit {
+  canClick = false;
+  gameid;
   user;
+  socket = io.connect();
+  game;
+  component = this;
+  message;
+  gamePeice = 'O';
   constructor(
     private _httpService: HttpService,
     private _route: ActivatedRoute,
@@ -19,6 +26,30 @@ export class TicTacToeComponent implements OnInit {
 
   ngOnInit() {
     this.checkSession();
+    this._route.params.subscribe(params =>{
+      console.log(params['id']);
+      this.gameid = params['id'];
+      this.socket.emit('tictactoe', {initial: true,gameId: this.gameid});
+    });
+
+    this.socket.on('tictactoe',function(data){
+      if(data['game']['_id'] == this.gameid){
+        this.game = data['game'];
+        if(this.game['players'].length<2){
+          this.message = "Awaiting a challenger"
+          this.gamePeice = 'X';
+        }else{
+          if(this.game.turn == this.user.username){
+            this.message = "Your turn!"
+            this.canClick = true;
+          }else{
+            this.canClick = true;
+            this.message = "Awaiting your opponents move..."
+          }
+        }
+      }
+    }.bind(this))
+
   }
   checkSession(){
     let loggedIn = this._httpService.checkSession();
@@ -27,7 +58,6 @@ export class TicTacToeComponent implements OnInit {
         this._router.navigate(['/login']);
       }
       this.user = data['user'];
-      console.log(this.user);
     })
   }
   logout(){
@@ -39,7 +69,8 @@ export class TicTacToeComponent implements OnInit {
     })
   }
   updateBoard(arr, index){
-
+    console.log('clicked',arr,index);
+    if(!this.canClick ){return}
   }
 
 }

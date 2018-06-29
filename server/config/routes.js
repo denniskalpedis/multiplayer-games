@@ -4,8 +4,8 @@ const path = require("path");
 
 module.exports = function(app){
     app.get('/api/chat', function(req, res, next){
-            Game.getAllChats(req, res);
-        });
+        Game.getAllChats(req, res);
+    });
     app.get('/chat/:room', function(req, res, next) {
         Game.getChat(req, res);
     });
@@ -36,6 +36,9 @@ module.exports = function(app){
     })
     app.get('/api/TTT/open', function(req,res){
         Game.openTTT(req,res);
+    })
+    app.get('/api/TTT/join/:id', function(req,res){
+        Game.joinTTT(req,res);
     })
     app.all("*", (req,res,next) => {
         res.sendFile(path.resolve("./public/dist/public/index.html"))
