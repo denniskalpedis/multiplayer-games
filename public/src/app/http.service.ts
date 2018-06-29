@@ -56,4 +56,7 @@ export class HttpService {
   updateGame(id, data){
     return this._http.put('/api/memory/update/' + id, data)
   }
+  joinTTT(id){
+    return this._http.get('/api/TTT/join/'+id);
+  }
 }

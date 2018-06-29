@@ -4,8 +4,30 @@
     </a>
     <a (click)="logout()">Log Out</a>
 </nav>
-<div>
-  <div class="tttGameBoard">
-    <div class="ttt border-right" (click)="updateBoard(0,0)">{{gameBoard[0][0]}}</div><div class="ttt" (click)="updateBoard(0,1)">{{gameBoard[0][1]}}</div><div class="ttt border-left" (click)="updateBoard(0,0)">{{gameBoard[0][2]}}</div><br><div class="ttt" (click)="updateBoard(1,0)">{{gameBoard[1][0]}}</div><div class="ttt border-right border-top border-left border-bottom" (click)="updateBoard(1,1)">{{gameBoard[1][1]}}</div><div class="ttt" (click)="updateBoard(1,0)">{{gameBoard[1][2]}}</div><br><div class="ttt border-right" (click)="updateBoard(2,0)">{{gameBoard[2][0]}}</div><div class="ttt" (click)="updateBoard(2,1)">{{gameBoard[2][1]}}</div><div class="ttt border-left" (click)="updateBoard(2,2)">{{gameBoard[2][2]}}</div><br>
-  </div>
+<div class="alert alert-primary text-center">{{message}}</div>
+<div class="tttContainer">
+
+    <div class="tttGameBoard" *ngIf="game.gameBoard">
+      
+    
+      <div class="ttt-row">
+        <div class="ttt" (click)="updateBoard(0,0)">{{game.gameBoard[0][0]}}</div>
+        <div class="ttt" (click)="updateBoard(0,1)">{{game.gameBoard[0][1]}}</div>
+        <div class="ttt" (click)="updateBoard(0,2)">{{game.gameBoard[0][2]}}</div>
+      </div>
+      <div class="ttt-row">
+        <div class="ttt" (click)="updateBoard(1,0)">{{game.gameBoard[1][0]}}</div>
+        <div class="ttt" (click)="updateBoard(1,1)">{{game.gameBoard[1][1]}}</div>
+        <div class="ttt" (click)="updateBoard(1,2)">{{game.gameBoard[1][2]}}</div>
+      </div>
+      
+        <div class="ttt-row">
+        <div class="ttt" (click)="updateBoard(2,0)">{{game.gameBoard[2][0]}}</div>
+        <div class="ttt" (click)="updateBoard(2,1)">{{game.gameBoard[2][1]}}</div>
+        <div class="ttt" (click)="updateBoard(2,2)">{{game.gameBoard[2][2]}}</div>
+      </div>
+     
+        </div>
+
 </div>
+<!-- <app-chat></app-chat> -->

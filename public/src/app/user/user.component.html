@@ -8,7 +8,6 @@
 <p>Open a new Tic Tac Toe Game <button (click)="openTTT()">Go</button></p>
 <p>Open a new Memory Game <button (click)="openMemory()">Go</button></p>
 
-<div class="row">
     <div class="col-4">
         <h3>Join an existing Tic Tac Toe Game!</h3>
         <div *ngFor="let game of TTTGames">
@@ -18,14 +17,6 @@
             </div>
         </div>
     </div>
-    <div class="col-4">
-        <h3>Join an existing Memory Game!</h3>
-        <div *ngFor="let game of Mgames">
-            <div *ngIf="user._id != game.players[0]._id">
-                <p>{{game.players[0].username}} is awaiting a challenger!</p>
-                <button (click)="joinMemory(game._id)">Battle!</button>
-            </div>
-        </div>
     </div>
     <div class="col-4">
         <h3>Active Games!</h3>

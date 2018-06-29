@@ -23,4 +23,4 @@ var MemorySchema = new mongoose.Schema({
    
 mongoose.model('User', UserSchema);
 mongoose.model('Memory', MemorySchema);
-module.exports = mongoose.model('Chat', ChatSchema);
+mongoose.model('Chat', ChatSchema);
