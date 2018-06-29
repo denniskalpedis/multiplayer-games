@@ -14,10 +14,9 @@ export class TicTacToeComponent implements OnInit {
   gameid;
   user;
   socket = io.connect();
-  game;
+  game = { gameBoard: null};
   component = this;
   message;
-  gamePeice = 'O';
   constructor(
     private _httpService: HttpService,
     private _route: ActivatedRoute,
@@ -29,7 +28,7 @@ export class TicTacToeComponent implements OnInit {
     this._route.params.subscribe(params =>{
       console.log(params['id']);
       this.gameid = params['id'];
-      this.socket.emit('tictactoe', {initial: true,gameId: this.gameid});
+      this.socket.emit('tictactoe', {type: 'inital',gameId: this.gameid});
     });
 
     this.socket.on('tictactoe',function(data){
@@ -37,13 +36,15 @@ export class TicTacToeComponent implements OnInit {
         this.game = data['game'];
         if(this.game['players'].length<2){
           this.message = "Awaiting a challenger"
-          this.gamePeice = 'X';
         }else{
-          if(this.game.turn == this.user.username){
+          if(this.game.winner != 'none') {
+            this.message = `${this.game.winner} has won!`
+            this.canClick = false;
+          }else if(this.game.turn == this.user.username){
             this.message = "Your turn!"
             this.canClick = true;
           }else{
-            this.canClick = true;
+            this.canClick = false;
             this.message = "Awaiting your opponents move..."
           }
         }
@@ -51,6 +52,7 @@ export class TicTacToeComponent implements OnInit {
     }.bind(this))
 
   }
+  
   checkSession(){
     let loggedIn = this._httpService.checkSession();
     loggedIn.subscribe(data =>{
@@ -68,9 +70,10 @@ export class TicTacToeComponent implements OnInit {
       }
     })
   }
-  updateBoard(arr, index){
-    console.log('clicked',arr,index);
-    if(!this.canClick ){return}
+  updateBoard(row, col){
+    console.log('clicked',row,col);
+    if(!this.canClick || this.game.gameBoard[row][col] != '' ){return}
+    this.socket.emit('tictactoe', {type: 'move', gameId: this.gameid, username: this.user.username, row, col})
   }
 
 }

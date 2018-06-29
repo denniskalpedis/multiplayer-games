@@ -38,7 +38,7 @@ module.exports = {
                 console.log(err);
             }
             if(user){
-                var game = new ticTacToe({gameBoard: [['','',''],['','',''],['','','']],turn: 'none',players: [user]});
+                var game = new ticTacToe({gameBoard: [['','',''],['','',''],['','','']],turn: 'none',players: [user], winner: 'none'});
                 game.save(function(err,ttt){
                     if(err){
                         console.log(err)

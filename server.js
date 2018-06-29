@@ -8,8 +8,9 @@ app.use(bodyParser.json());
 const server = app.listen(8000);
 app.use(express.static( __dirname + '/public/dist/public' ));
 const mongoose = require('mongoose'),
-      User = mongoose.model('User'),
-      ticTacToe = mongoose.model('TTT');
+      User = mongoose.model('User');
+
+var tttEvents = require('./server/ticTacToe/events')
 
 var io = require('socket.io')(server);
 io.on('connection', function (socket) {
@@ -20,36 +21,13 @@ io.on('connection', function (socket) {
       io.emit('new-message', { message: data });
     });
     socket.on('tictactoe', function(data){
-      if(data['initial']){
-        console.log(data);
-        ticTacToe.findOne({ _id: data['gameId'] }, function(err,game){
-          if(err){
-              console.log(err)
-          }else{
-            console.log('about to emit');
-              io.emit('tictactoe', {game: game} );
-          }
-      })
-      }else{
-        ticTacToe.findOne({ _id: data['game']['_id'] }, function(err,game){
-          if(err){
-              console.log(err)
-          }else{
-            for(person of game.players){
-              if(person.username != game.turn){
-                game.turn = person.username;
-              }
-            }
-            game.gameBoard = data['game']['gameBoard'];
-            game.save(function(err,ttt){
-              if(err){
-                  console.log(err)
-              }else{
-                io.emit('tictactoe', {game: ttt} );
-              }
-          })
-          }
-      })
+      switch (data.type) {
+        case 'inital':
+          return tttEvents.onInit(data, io);
+        case 'move':
+          return tttEvents.onMove(data, io);
+        default:
+          break;
       }
     })
   });
