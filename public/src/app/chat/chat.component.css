@@ -136,3 +136,9 @@ div#chat_box {
      z-index: -1;
      transform: translateY(20px)
     }
+#chat_bubble:focus #chatbox {
+    transform: translateY(20%);
+    -webkit-transform: translateY(20%);
+    -webkit-transition: all 600ms;
+    transition: all 600ms;
+}

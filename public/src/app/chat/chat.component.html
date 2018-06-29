@@ -7,20 +7,14 @@
   <label for="">Say:</label> <input type="text">
 </div> -->
 <!-- <img src="/assets/images/chat.png" id="chat_bubble"> -->
-<div class="card card-primary" id="chat_box" *ngIf="joined">
+<div class="card card-primary" id="chat_box">
     <img src="/assets/images/chat.png" id="chat_bubble">
   <div class="card-heading">
-    <span class="glyphicon glyphicon-comment"></span> {{ msgData.room }}
-    <!-- <div class="btn-group float-right">
-            <button type="button" class="btn btn-default btn-xs" (click)="logout()">
-                Logout
-            </button>
-        </div> -->
   </div>
   <div #scrollMe class="card-body">
     <ul class="chat">
       <li *ngFor="let c of chats">
-        <div class="left clearfix" *ngIf="c.nickname===msgData.nickname; else rightchat">
+        <div class="left clearfix">
           <div class="chat-body clearfix">
             <div class="header">
               <strong class="primary-font">{{ c.nickname }}</strong>
@@ -29,17 +23,7 @@
             <p>{{ c.message }}</p>
           </div>
         </div>
-        <ng-template #rightchat>
-          <div class="carousel-item-right clearfix">
-            <div class="chat-body clearfix">
-              <div class="header">
-                <small class=" text-muted">{{ c.updated_at | date: 'medium' }}</small>
-                <strong class="float-right primary-font">{{ c.nickname }}</strong>
-              </div>
-              <p>{{ c.message }}</p>
-            </div>
-          </div>
-        </ng-template>
+
       </li>
     </ul>
   </div>

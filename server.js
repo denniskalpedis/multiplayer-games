@@ -13,6 +13,10 @@ io.on('connection', function (socket) {
     socket.on('disconnect', function() {
       console.log('User disconnected');
     });
+    socket.on('update-game', function(game){
+      console.log("updating Game!");
+      io.emit('updated-game', { game: game });
+    });
     socket.on('save-message', function (data) {
       console.log(data);
       io.emit('new-message', { message: data });

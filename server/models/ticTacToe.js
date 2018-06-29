@@ -4,6 +4,6 @@ var TTTSchema = new mongoose.Schema({
     gameBoard: [[],[],[]],
     turn: String,
     players: []
-   },{timestamp: true})
+   },{timestamps: true});
    
 mongoose.model('TTT', TTTSchema);

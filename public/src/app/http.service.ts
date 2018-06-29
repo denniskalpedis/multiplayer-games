@@ -27,7 +27,28 @@ export class HttpService {
   newTTT(){
     return this._http.get('/api/TTT/new');
   }
+  newMemory(board){
+    return this._http.post('/api/Memory/new', board);
+  }
   openTTT(){
     return this._http.get('/api/TTT/open');
+  }
+  openMemory(){
+    return this._http.get('/api/Memory/open');
+  }
+  activeGames(id){
+    return this._http.get('/api/Games/active/' + id);
+  }
+  joinMemory(id, user){
+    console.log("-------------");
+    console.log("joining " + id);
+    console.log("-------------");
+    return this._http.put('/api/Memory/join/' + id, user);
+  }
+  getMemoryGame(id){
+    return this._http.get('/api/Memory/game/' + id);
+  }
+  updateGame(id, data){
+    return this._http.put('/api/memory/update/' + id, data)
   }
 }

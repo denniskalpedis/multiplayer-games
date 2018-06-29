@@ -57,7 +57,6 @@ module.exports = {
                 bcrypt.compare(req.body.password, user.password)
                 .then( result => {
                     if(result){
-                       
                         req.session.userId = user._id;
                         res.json({err: false,user:user});
                     }else{
@@ -92,7 +91,7 @@ module.exports = {
             if(err){
                 console.log(err);
             }
-        })
+        });
     },
     allUsers: function(req,res){
         User.find({},function(err,users){
@@ -101,6 +100,6 @@ module.exports = {
             }else{
                 res.json({users:users})
             }
-        })
+        });
     }
 }

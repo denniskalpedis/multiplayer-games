@@ -76,3 +76,6 @@ label:hover :checked + .outer {
     left: 0;
 
 } */
+.hidden {
+    display: none;
+}
