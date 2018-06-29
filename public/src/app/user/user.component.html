@@ -10,6 +10,7 @@
 <h3>Join an existing Game!</h3>
 <div *ngFor="let game of TTTGames">
     <div *ngIf="user._id != game.players[0]._id">
+        <p>{{game._id}}</p>
         <p>{{game.players[0].username}} is awaiting a challenger!</p>
         <button (click)="joinTTT(game._id)">Battle!</button>
     </div>

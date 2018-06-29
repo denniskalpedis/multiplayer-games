@@ -10,7 +10,13 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
   styleUrls: ['./tic-tac-toe.component.css']
 })
 export class TicTacToeComponent implements OnInit {
+  canClick = false;
+  gameid;
   user;
+  socket = io.connect();
+  game = { gameBoard: null};
+  component = this;
+  message;
   constructor(
     private _httpService: HttpService,
     private _route: ActivatedRoute,
@@ -19,7 +25,34 @@ export class TicTacToeComponent implements OnInit {
 
   ngOnInit() {
     this.checkSession();
+    this._route.params.subscribe(params =>{
+      console.log(params['id']);
+      this.gameid = params['id'];
+      this.socket.emit('tictactoe', {type: 'inital',gameId: this.gameid});
+    });
+
+    this.socket.on('tictactoe',function(data){
+      if(data['game']['_id'] == this.gameid){
+        this.game = data['game'];
+        if(this.game['players'].length<2){
+          this.message = "Awaiting a challenger"
+        }else{
+          if(this.game.winner != 'none') {
+            this.message = `${this.game.winner} has won!`
+            this.canClick = false;
+          }else if(this.game.turn == this.user.username){
+            this.message = "Your turn!"
+            this.canClick = true;
+          }else{
+            this.canClick = false;
+            this.message = "Awaiting your opponents move..."
+          }
+        }
+      }
+    }.bind(this))
+
   }
+  
   checkSession(){
     let loggedIn = this._httpService.checkSession();
     loggedIn.subscribe(data =>{
@@ -27,7 +60,6 @@ export class TicTacToeComponent implements OnInit {
         this._router.navigate(['/login']);
       }
       this.user = data['user'];
-      console.log(this.user);
     })
   }
   logout(){
@@ -38,8 +70,10 @@ export class TicTacToeComponent implements OnInit {
       }
     })
   }
-  updateBoard(arr, index){
-
+  updateBoard(row, col){
+    console.log('clicked',row,col);
+    if(!this.canClick || this.game.gameBoard[row][col] != '' ){return}
+    this.socket.emit('tictactoe', {type: 'move', gameId: this.gameid, username: this.user.username, row, col})
   }
 
 }

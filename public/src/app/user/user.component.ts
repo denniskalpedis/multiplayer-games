@@ -58,5 +58,13 @@ export class UserComponent implements OnInit {
       }
     })
   }
+  joinTTT(id){
+    let join = this._httpService.joinTTT(id);
+    join.subscribe(data =>{
+      if(data['game']){
+        this._router.navigate(['/ttt/'+ data['game']['_id']]);
+      }
+    })
+  }
 
 }

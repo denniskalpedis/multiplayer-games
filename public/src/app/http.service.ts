@@ -30,4 +30,7 @@ export class HttpService {
   openTTT(){
     return this._http.get('/api/TTT/open');
   }
+  joinTTT(id){
+    return this._http.get('/api/TTT/join/'+id);
+  }
 }
