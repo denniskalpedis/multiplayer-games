@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpService } from './../http.service';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-memory',
@@ -8,7 +10,10 @@ import { CommonModule } from '@angular/common';
 })
 export class MemoryComponent implements OnInit {
 
-  constructor(private _commonModule: CommonModule) { }
+  constructor(private _commonModule: CommonModule,
+    private _httpService: HttpService,
+    private _router: Router) { }
+  user;
   layout = [];
   images = [];
   testing = [];
@@ -21,6 +26,7 @@ export class MemoryComponent implements OnInit {
   player2={color:"green", name:"Player 1"};
   turn = 1;
   ngOnInit() {
+    this.checkSession();
     for(var i = 0; i < 54; i++){
       this.images[i] = "/assets/images/dogs/" + i + ".png"
     }
@@ -33,6 +39,16 @@ export class MemoryComponent implements OnInit {
     for(let i = 0; i <this.layout.length; i++){
       this.testing.push({match: this.layout[i], image: this.images[this.layout[i]], active: "none", player:0});
     }
+  }
+  checkSession(){
+    let loggedIn = this._httpService.checkSession();
+    loggedIn.subscribe(data =>{
+      if(!data['loggedIn']){
+        this._router.navigate(['/login']);
+      }
+      this.user = data['user'];
+      console.log(this.user);
+    })
   }
   onClick(event){
     console.log(event.srcElement.classList);

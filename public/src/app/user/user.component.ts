@@ -32,11 +32,13 @@ export class UserComponent implements OnInit {
     })
   }
   logout(){
+    localStorage.removeItem("user");
     let logout = this._httpService.logout();
     logout.subscribe(data =>{
       if(!data['loggedIn']){
         this._router.navigate(['/login']);
       }
+      
     })
   }
   getOpenTTT(){

@@ -6,21 +6,21 @@ module.exports = {
     newUser: function(req,res){
         User.findOne({email: req.body.email},function(err,user){
             if(err){
-                res.json({err: true, error: err })
-                return
+                res.json({err: true, error: err });
+                return;
             }
             if(user){
-                res.json({err: true, error: "This email is already registered." })
-                return
+                res.json({err: true, error: "This email is already registered." });
+                return;
             }else{
                 User.findOne({username: req.body.username},function(err,user){
                     if(err){
-                        res.json({err: true, error: err })
-                        return
+                        res.json({err: true, error: err });
+                        return;
                     }
                     if(user){
-                        res.json({err: true, error: "This username is already registered." })
-                        return
+                        res.json({err: true, error: "This username is already registered." });
+                        return;
                     }else{
                         bcrypt.hash(req.body.password, 10)
                         .then(hashed_password => {
@@ -29,12 +29,13 @@ module.exports = {
                             user.save(function(err,user){
                                 if(err){
                                     res.json({err: true, error: err });
-                                    return
+                                    return;
                                 }else{
+                                    
                                     req.session.userId = user._id;
                                     console.log(req.session.userId);
                                     res.json({err: false, user: user});
-                                    return
+                                    return;
                                 }
                             })
                         }).catch(error => {
@@ -52,33 +53,34 @@ module.exports = {
                 bcrypt.hash('my password', 10)
                 .then(result =>{
                     console.log(result);
-                })
+                });
                 bcrypt.compare(req.body.password, user.password)
                 .then( result => {
                     if(result){
+                       
                         req.session.userId = user._id;
-                        res.json({err: false,user:user})
+                        res.json({err: false,user:user});
                     }else{
                         res.json({err: true, error: "Invalid email or password." })  
                     }
                 }).catch(error => {
-                    console.log('in error')
+                    console.log('in error');
                     console.log(error);
                 });
 
             }else{
                 res.json({err: true, error: "Invalid email or password." })
             }
-        })
+        });
     },
     checkSession: function(req,res){
         if(!req.session.userId){
-            res.json({loggedIn: false})
-            return
+            res.json({loggedIn: false});
+            return;
         }
         User.findOne({_id: req.session.userId},function(err,user){
             res.json({loggedIn: true, user: user});
-        })
+        });
     },
     logOut: function(req,res){
         req.session.userId = false;

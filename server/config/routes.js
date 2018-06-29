@@ -16,7 +16,7 @@ module.exports = function(app){
         User.newUser(req,res);
     })
     app.post('/api/user/login', function(req, res) {
-        console.log('in route')
+        console.log('in route');
         User.logIn(req,res);
     })
     app.get('/api/user/session', function(req,res){

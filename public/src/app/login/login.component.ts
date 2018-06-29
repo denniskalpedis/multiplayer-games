@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    localStorage.removeItem("user");
     this.checkSession();
     this.user = {
       email: '',
@@ -47,6 +48,7 @@ export class LoginComponent implements OnInit {
       if(!data['user']){
         this.loginError = data['error']
       }else{
+        localStorage.setItem("user", JSON.stringify({ nickname: data['user'].username, room: "general" }));
         this._router.navigate(['/user']);
       }
     })
@@ -57,6 +59,7 @@ export class LoginComponent implements OnInit {
       if(!data['user']){
         this.registrationError = data['error']
       }else{
+        localStorage.setItem("user", JSON.stringify({ nickname: data['user'].username, room: "general" }));
         this._router.navigate(['/user']);
       }
     })

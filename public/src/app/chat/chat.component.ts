@@ -12,7 +12,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 export class ChatComponent implements OnInit, AfterViewChecked {
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   chats:any;
-  joined: boolean = false;
+  // joined: boolean = false;
   newUser = { nickname: '', room: '' };
   msgData = { room: '', nickname: '', message: '' };
   socket = io.connect();
@@ -24,14 +24,15 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.getUser();
     var user = JSON.parse(localStorage.getItem("user"));
+    console.log(user);
     if(user!=null) {
       this.getChatByRoom(user.room);
       this.msgData = { room: user.room, nickname: user.nickname, message: '' }
-      this.joined = true;
+      // this.joined = true;
       this.scrollToBottom();
     }
     this.socket.on('new-message', function (data) {
-      if(this.joined){
+      // if(this.joined){
         if(data.message["_body"]){
           var temp = JSON.parse(data.message["_body"]);
         } else {
@@ -42,7 +43,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           this.msgData.message = '';
           this.scrollToBottom();
         }
-      }
+      // }
     }.bind(this));
   }
   ngAfterViewChecked() {
@@ -66,15 +67,15 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     localStorage.setItem("user", JSON.stringify(this.newUser));
     this.getChatByRoom(this.newUser.room);
     this.msgData = { room: this.newUser.room, nickname: this.newUser.nickname, message: '' };
-    this.joined = true;
+    // this.joined = true;
     this.socket.emit('save-message', { room: this.newUser.room, nickname: this.newUser.nickname, message: 'Join this room'});
   }
   getUser(){
-    let loggedIn = this._httpService.getUser();
+    let loggedIn = this._httpService.checkSession();
     loggedIn.subscribe(data =>{
       this.msgData = { room: "general", nickname: data['user'].username, message: '' };
-      this.joined = true;
-      localStorage.setItem("user", JSON.stringify({ nickname: this.msgData.nickname, room: this.msgData.room }));
+      // this.joined = true;
+      // localStorage.setItem("user", JSON.stringify({ nickname: this.msgData.nickname, room: this.msgData.room }));
       this.socket.emit('save-message', { room: this.msgData.room, nickname: this.msgData.nickname, message: 'Join this room'});
     });
   }
