@@ -29,12 +29,19 @@
     </div>
     <div class="col-4">
         <h3>Active Games!</h3>
-        <div *ngFor="let game of allGames">
+        
+        <div *ngFor="let game of allMemoryGames">
             <div *ngIf="user._id == game.players[0]._id || user._id == game.players[1]._id">
-                <p>Game already started!</p>
-                <button (click)="joinMemory(game._id)">Continue!</button>
+                <p>Memory game already started!</p>
+                <button (click)="viewMemory(game._id)">Continue!</button>
             </div>
         </div>
+        <div *ngFor="let game of allTTTGames">
+                <div *ngIf="user._id == game.players[0]._id || user._id == game.players[1]._id">
+                    <p>Tic-Tac-Toe game already started!</p>
+                    <button (click)="viewMemory(game._id)">Continue!</button>
+                </div>
+            </div>
     </div>
 </div>
 <app-chat></app-chat>

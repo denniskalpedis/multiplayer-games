@@ -40,7 +40,11 @@ export class MemoryComponent implements OnInit {
     });
     this.checkSession();
     this.socket.on('updated-game', function (data) {
-      this.game = data;
+      if(this.id == data["game"]._id){
+        console.log(data["game"]);
+        this.game = data["game"];
+      }
+      
     }.bind(this));
   }
   getGame(){
@@ -144,19 +148,23 @@ export class MemoryComponent implements OnInit {
     }
   }
   onClickBoring(event){
-    if(this.board[event.target.id].active == "none" && !this.waiting && this.game.players.length == 2 && this.game.players[this.game.turn-1]._id != this.user._id){
+    if(this.board[event.target.id].active == "none" && !this.waiting && this.game.players.length == 2 && this.game.players[this.game.turn-1]._id == this.user._id){
       if(this.firstPick){
         this.game.moves.push(event.target.id);
         this.secondPick = event.target.id;
-        this.board[event.target.id].active = this.board[event.target.id].image
-        if (this.board[this.firstPick].match == this.board[this.secondPick].match ){
+        this.game.board[event.target.id].active = this.game.board[event.target.id].image
+        if (this.game.board[this.firstPick].match == this.game.board[this.secondPick].match ){
           if (this.game.turn == 1){
-            this.game.turn = 2;
+            // this.game.turn = 2;
             this.game.score[0] ++;
           } else {
-            this.game.turn = 1;
+            // this.game.turn = 1;
             this.game.score[1] ++;
           }
+          this.game.board[this.firstPick].player = this.turn;
+          this.game.board[this.secondPick].player = this.turn;
+          this.firstPick= null;
+          this.secondPick= null;
           let update = this._httpService.updateGame(this.game._id, this.game);
           update.subscribe(data =>{
             if(!data['game']){
@@ -164,19 +172,21 @@ export class MemoryComponent implements OnInit {
             }
             this.socket.emit('update-game', this.game);
           })
-          this.board[this.firstPick].player = this.turn;
-          this.board[this.secondPick].player = this.turn;
-          this.firstPick= null;
-          this.secondPick= null;
           if (this.game.score[0] + this.game.score[1] == 15){
             this.winner = true;
           }
-          return true;
+          // return true;
         } else {
-          
+          let update = this._httpService.updateGame(this.game._id, this.game);
+          update.subscribe(data =>{
+            if(!data['game']){
+              console.log("uh-oh, spaggetti-oh's")
+            }
+            this.socket.emit('update-game', this.game);
+          });
           this.waiting = true;
-          setTimeout(lost=>{ this.board[this.firstPick].active = "none";
-          this.board[this.secondPick].active = "none";
+          setTimeout(lost=>{ this.game.board[this.firstPick].active = "none";
+          this.game.board[this.secondPick].active = "none";
           this.firstPick= null;
           this.secondPick= null;
           this.waiting = false;
@@ -191,10 +201,13 @@ export class MemoryComponent implements OnInit {
               console.log("uh-oh, spaggetti-oh's")
             }
             this.socket.emit('update-game', this.game);
-          })}, 1500);
+          });
+        }, 1500);
         }
       } else {
         this.game.moves.push(event.target.id);
+        this.game.board[event.target.id].active = this.game.board[event.target.id].image
+        this.firstPick = event.target.id;
           let update = this._httpService.updateGame(this.game._id, this.game);
           update.subscribe(data =>{
             if(!data['game']){
@@ -202,8 +215,7 @@ export class MemoryComponent implements OnInit {
             }
             this.socket.emit('update-game', this.game);
           })
-        this.board[event.target.id].active = this.board[event.target.id].image
-        this.firstPick = event.target.id;
+        
       }
     }
   }

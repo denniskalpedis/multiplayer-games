@@ -3,7 +3,7 @@
 {{game.players[0].username}} Score: {{game.score[0]}}&emsp;{{game.players[1].username}} Score: {{game.score[1]}}<br></div>
 
 <h1 *ngIf="game.players.length != 2">Waiting for Opponent!</h1>
-<div class="col-2 d-inline-block" *ngFor="let card of board; let i = index" [ngClass]="{'d-none':game.players.length != 2}">
+<div class="col-2 d-inline-block" *ngFor="let card of game.board; let i = index" [ngClass]="{'d-none':game.players.length != 2}">
   <!-- <label>
     <input type="checkbox"  [checked]="board[i].active != 'none'" [disabled]="board[i].active != 'none' || waiting || game.players.length != 2 || game.players[game.turn-1]._id != user._id"/>
     <div class="d-inline-block outer">
@@ -12,7 +12,7 @@
     </div>
   </label> -->
   <div class="d-inline-block outer">
-    <div class="bg-secondary d-inline-block card front" (click)="onClickBoring($event)" id={{i}} [ngStyle]="{'background-image':'url('+board[i].active+')','background-size':'100px 100px','outline':currentPlayer}" [ngClass]="{'p1' : board[i].player == 1, 'p2' : board[i].player == 2}"></div>
+    <div class="bg-secondary d-inline-block card front" (click)="onClickBoring($event)" id={{i}} [ngStyle]="{'background-image':'url('+game.board[i].active+')','background-size':'100px 100px','outline':currentPlayer}" [ngClass]="{'p1' : game.board[i].player == 1, 'p2' : game.board[i].player == 2}"></div>
   </div>
 </div>
 <app-chat></app-chat>

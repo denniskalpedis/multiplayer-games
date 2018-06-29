@@ -55,8 +55,13 @@ module.exports = function(app){
     app.get('/api/Memory/delete/all', function(req, res){
         Game.deleteAllMemory(req,res);
     });
-    app.get('/api/Games/active/:id', function(req, res){
-        Game.activeGames(req,res);
+    app.get('/api/Games/ttt/active/:id', function(req, res){
+        console.log("routes");
+        Game.activeTTTGames(req,res);
+    });
+    app.get('/api/Games/memory/active/:id', function(req, res){
+        console.log("routes");
+        Game.activeMemoryGames(req,res);
     });
     app.put('/api/memory/update/:id', function(req,res){
         Game.updateMemoryGame(req,res);

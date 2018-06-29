@@ -142,3 +142,15 @@ div#chat_box {
     -webkit-transition: all 600ms;
     transition: all 600ms;
 }
+input[type=checkbox]:checked + #chatbox{
+    transform: translateY(0%);
+    -webkit-transform: translateY(0%);
+}
+
+input[type=checkbox]:checked + #chatbox {
+    transform: translateY(0%);
+    -webkit-transform: translateY(0%);
+}
+input {
+    display: none;
+}

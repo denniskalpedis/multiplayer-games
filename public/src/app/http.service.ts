@@ -36,8 +36,13 @@ export class HttpService {
   openMemory(){
     return this._http.get('/api/Memory/open');
   }
-  activeGames(id){
-    return this._http.get('/api/Games/active/' + id);
+  activeMemoryGames(id){
+    console.log("http.service")
+    return this._http.get('/api/Games/memory/active/' + id);
+  }
+  activeTTTGames(id){
+    console.log("http.service")
+    return this._http.get('/api/Games/ttt/active/' + id);
   }
   joinMemory(id, user){
     console.log("-------------");

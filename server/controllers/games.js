@@ -85,19 +85,25 @@ module.exports = {
             }
         });
     },
-    activeGames: function(req,res){ //not working....didn't think through...too late!
-        memory.find({ _id: req.params.id }, function(err,game){
+    activeMemoryGames: function(req,res){
+        memory.find({ }, function(err,games){
             if(err){
                 console.log(err);
             }else{
-                res.json({game: game});
+                res.json({games: games});
+            }
+        });
+    },
+    activeTTTGames: function(req,res){
+        ticTacToe.find({ }, function(err,games){
+            if(err){
+                console.log(err);
+            }else{
+                res.json({games: games});
             }
         });
     },
     updateMemoryGame: function(req,res){
-        console.log("--------------------")
-        console.log("printing body")
-        console.log("--------------------")
         // memory.findOne({ _id: req.params.id }, function(err,game){
         //     if(err){
         //         console.log("DANGER: will robinson!");
@@ -146,7 +152,7 @@ module.exports = {
         });
     },
     openMemory: function(req,res){
-        memory.find({ "users.1": { "$exists": false } }, function(err,games){
+        memory.find({ "players.1": { "$exists": false } }, function(err,games){
             console.log("finding games");
             console.log(games);
             if(err){

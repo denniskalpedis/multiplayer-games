@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from './../http.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MemoryComponent } from '../memory/memory.component';
+import * as io from "socket.io-client";
 @Component({
   providers:[MemoryComponent],
   selector: 'app-user',
@@ -9,10 +10,12 @@ import { MemoryComponent } from '../memory/memory.component';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
+  socket = io.connect();
   user;
   TTTGames;
   Mgames;
-  allGames;
+  allMemoryGames;
+  allTTTGames;
   constructor(
     private _httpService: HttpService,
     private _route: ActivatedRoute,
@@ -24,7 +27,11 @@ export class UserComponent implements OnInit {
     this.checkSession();
     this.getOpenTTT();
     this.getOpenMemory();
-    this.getActiveGames();
+    this.socket.on('new-memory-games', function (data) {
+      this.Mgames = data["game"];
+      
+    }.bind(this));
+    // this.getActiveGames();
   }
   checkSession(){
     let loggedIn = this._httpService.checkSession();
@@ -33,6 +40,8 @@ export class UserComponent implements OnInit {
         this._router.navigate(['/login']);
       }
       this.user = data['user'];
+      this.getActiveMemoryGames();
+      this.getActiveTTTGames();
       console.log(this.user);
     })
   }
@@ -59,10 +68,18 @@ export class UserComponent implements OnInit {
       this.Mgames = data['games']
     })
   }
-  getActiveGames(){
-    let activeGames = this._httpService.activeGames(this.user.id);
+  getActiveMemoryGames(){
+    console.log("user.ts")
+    let activeGames = this._httpService.activeMemoryGames(this.user._id);
     activeGames.subscribe(data =>{
-      this.allGames = data['games']
+      this.allMemoryGames = data['games']
+    })
+  }
+  getActiveTTTGames(){
+    console.log("user.ts")
+    let activeGames = this._httpService.activeTTTGames(this.user._id);
+    activeGames.subscribe(data =>{
+      this.allTTTGames = data['games']
     })
   }
   openTTT(){
@@ -76,9 +93,12 @@ export class UserComponent implements OnInit {
   }
   joinMemory(id){
     let joinMemory = this._httpService.joinMemory(id, this.user);
+    
     joinMemory.subscribe(data =>{
       if(data['game']){
         this._router.navigate(['/memory/'+ data['game']['_id']]);
+        
+        this.socket.emit('update-game', data['game']);
       }
     })
   }
@@ -90,8 +110,12 @@ export class UserComponent implements OnInit {
       console.log(data);
       if(data['game']){
         this._router.navigate(['/memory/'+ data['game']['_id']]);
+        this.socket.emit('new-memory-games', this.Mgames.push(data['game']));
       }
     })
+  }
+  viewMemory(id){
+    this._router.navigate(['/memory/'+ id]);
   }
 
 }
