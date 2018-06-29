@@ -14,7 +14,9 @@ var ChatSchema = new mongoose.Schema({
 var MemorySchema = new mongoose.Schema({
   room: String,
   board:[],
+  turn:Number,
   moves:[],
+  score:[],
   players:[]},
   {timestamps: true });
   

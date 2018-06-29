@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'user',component: UserComponent },
   { path: 'ttt/:id',component: TicTacToeComponent },
   { path: '', pathMatch: 'full', redirectTo: '/login' },
-  {path: 'memory', component: MemoryComponent},
+  {path: 'memory/:id', component: MemoryComponent},
   {path: 'chat', component: ChatComponent},
 ];
 

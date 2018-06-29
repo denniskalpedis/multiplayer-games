@@ -6,12 +6,33 @@
 </nav>
 <h4>Open a new game!</h4>
 <p>Open a new Tic Tac Toe Game <button (click)="openTTT()">Go</button></p>
+<p>Open a new Memory Game <button (click)="openMemory()">Go</button></p>
 
-<h3>Join an existing Game!</h3>
-<div *ngFor="let game of TTTGames">
-    <div *ngIf="user._id != game.players[0]._id">
-        <p>{{game._id}}</p>
-        <p>{{game.players[0].username}} is awaiting a challenger!</p>
-        <button (click)="joinTTT(game._id)">Battle!</button>
+    <div class="col-4">
+        <h3>Join an existing Tic Tac Toe Game!</h3>
+        <div *ngFor="let game of TTTGames">
+            <div *ngIf="user._id != game.players[0]._id">
+                <p>{{game.players[0].username}} is awaiting a challenger!</p>
+                <button (click)="joinTTT(game._id)">Battle!</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="col-4">
+        <h3>Active Games!</h3>
+        
+        <div *ngFor="let game of allMemoryGames">
+            <div *ngIf="user._id == game.players[0]._id || user._id == game.players[1]._id">
+                <p>Memory game already started!</p>
+                <button (click)="viewMemory(game._id)">Continue!</button>
+            </div>
+        </div>
+        <div *ngFor="let game of allTTTGames">
+                <div *ngIf="user._id == game.players[0]._id || user._id == game.players[1]._id">
+                    <p>Tic-Tac-Toe game already started!</p>
+                    <button (click)="viewMemory(game._id)">Continue!</button>
+                </div>
+            </div>
     </div>
 </div>
+<app-chat></app-chat>
