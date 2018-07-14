@@ -117,6 +117,9 @@ export class UserComponent implements OnInit {
   viewMemory(id){
     this._router.navigate(['/memory/'+ id]);
   }
+  viewTTT(id){
+    this._router.navigate(['/ttt/'+ id]);
+  }
   joinTTT(id){
     let join = this._httpService.joinTTT(id);
     join.subscribe(data =>{
