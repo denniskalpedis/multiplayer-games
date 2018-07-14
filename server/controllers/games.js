@@ -164,7 +164,7 @@ module.exports = {
         });
     },
     openTTT: function(req,res){
-        ticTacToe.find({ "users.1": { "$exists": false } }, function(err,games){
+        ticTacToe.find({ "players.1": { "$exists": false } }, function(err,games){
             if(err){
                 console.log(err);
             }else{

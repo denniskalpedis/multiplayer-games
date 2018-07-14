@@ -104,8 +104,8 @@ export class MemoryComponent implements OnInit {
             this.socket.emit('update-game', this.game);
           })
           
-          this.board[this.firstPick].player = this.turn;
-          this.board[this.secondPick].player = this.turn;
+          this.board[this.firstPick].player = this.game.turn - 1;
+          this.board[this.secondPick].player = this.game.turn - 1;
           this.firstPick= null;
           this.secondPick= null;
           if (this.game.score[0] + this.game.score[1] == 15){
@@ -148,7 +148,7 @@ export class MemoryComponent implements OnInit {
     }
   }
   onClickBoring(event){
-    if(this.board[event.target.id].active == "none" && !this.waiting && this.game.players.length == 2 && this.game.players[this.game.turn-1]._id == this.user._id){
+    if(this.game.board[event.target.id].active == "none" && !this.waiting && this.game.players.length == 2 && this.game.players[this.game.turn-1]._id == this.user._id){
       if(this.firstPick){
         this.game.moves.push(event.target.id);
         this.secondPick = event.target.id;
@@ -161,8 +161,8 @@ export class MemoryComponent implements OnInit {
             // this.game.turn = 1;
             this.game.score[1] ++;
           }
-          this.game.board[this.firstPick].player = this.turn;
-          this.game.board[this.secondPick].player = this.turn;
+          this.game.board[this.firstPick].player = this.game.turn;
+          this.game.board[this.secondPick].player = this.game.turn;
           this.firstPick= null;
           this.secondPick= null;
           let update = this._httpService.updateGame(this.game._id, this.game);

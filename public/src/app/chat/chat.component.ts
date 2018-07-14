@@ -13,7 +13,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   chats:any;
   newUser = { nickname: '', room: '' };
-  msgData = { room: '', nickname: '', message: '' };
+  msgData = { room: 'general', nickname: '', message: '' };
   socket = io.connect();
 
   constructor(private chatService: ChatService,
@@ -24,8 +24,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     
     var user = JSON.parse(localStorage.getItem("user"));
     if(user!=null) {
-      this.getChatByRoom(user.room);
-      this.msgData = { room: user.room, nickname: user.nickname, message: '' }
+      this.getChatByRoom("general");
+      this.msgData = { room: "general", nickname: user.nickname, message: '' }
       // this.joined = true;
       this.scrollToBottom();
     }else{
