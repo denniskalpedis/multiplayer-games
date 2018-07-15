@@ -50,21 +50,14 @@ module.exports = {
     logIn: function(req,res){
         User.findOne({email: req.body.email}, function(err,user){
             if(user){
-                bcrypt.hash('my password', 10)
-                .then(result =>{
-                    console.log(result);
-                });
                 bcrypt.compare(req.body.password, user.password)
                 .then( result => {
                     if(result){
                         req.session.userId = user._id;
                         res.json({err: false,user:user});
-                    }else{
-                        res.json({err: true, error: "Invalid email or password." })  
                     }
                 }).catch(error => {
-                    console.log('in error');
-                    console.log(error);
+                    res.json({err: true, error: "Invalid email or password." }) 
                 });
 
             }else{
