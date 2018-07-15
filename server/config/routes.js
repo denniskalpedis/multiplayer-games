@@ -55,6 +55,9 @@ module.exports = function(app){
     app.get('/api/Memory/delete/all', function(req, res){
         Game.deleteAllMemory(req,res);
     });
+    app.get('/api/TTT/delete/all', function(req, res){
+        Game.deleteAllTTT(req,res);
+    });
     app.get('/api/Games/ttt/active/:id', function(req, res){
         console.log("routes");
         Game.activeTTTGames(req,res);

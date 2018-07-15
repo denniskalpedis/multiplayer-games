@@ -76,6 +76,15 @@ module.exports = {
             }
         });
     },
+    deleteAllTTT: function(request, response){
+        ticTacToe.remove({}, function(err, game){
+            if(err){
+                response.json({message: "error", error: "DANGER WILL ROBINSON!"});
+            } else {
+                response.json({message: "GREAT SUCCESS"});
+            }
+        });
+    },
     getMemoryGame: function(req,res){
         memory.findOne({ _id: req.params.id }, function(err,game){
             if(err){
@@ -184,9 +193,9 @@ module.exports = {
                     game.turn = user.username;
                     game.save(function(err,ttt){
                         if(err){
-                            console.log(err)
+                            console.log(err);
                         }else{
-                            res.json({game: ttt})
+                            res.json({game: ttt});
                         } 
                     })
                 })
