@@ -67,6 +67,11 @@ div#chat_box {
     -ms-transition: height 2s ease-in-out;
     -o-transition: height 2s ease-in-out;
     transition: height 2s ease-in-out;
+    -webkit-transition: min-height 2s ease-in-out;
+    -moz-transition: min-height 2s ease-in-out;
+    -ms-transition: min-height 2s ease-in-out;
+    -o-transition: min-height 2s ease-in-out;
+    transition: min-height 2s ease-in-out;
   }
 
   .chat
